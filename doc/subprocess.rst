@@ -80,10 +80,6 @@ To successfully write a coverage file, the Python (sub)-process under
 anaylsis must shut down cleanly and have a chance for ``coverage`` to
 run the ``atexit`` handler it registers.
 
-Note the caveats in the Python docs for atexit: if you have never
-registered any signal handler at all, it won't work. So, you must make
-sure to have at least one signal handler registered (even a do-nothing
-one!) for coverage files to be written out.
-
-You need to ``terminate()`` (not ``kill()``) your subprocess if using
-``Popen`` for spawning (as as example).
+For example if you send SIGTERM to end the subprocess, but your
+subprocess has never registered any SIGTERM handler then a coverage
+file won't have a chance to get written by that subprocess.
